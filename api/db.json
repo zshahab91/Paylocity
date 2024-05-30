@@ -1,0 +1,34 @@
+{
+    "employees": [
+      {
+        "id": 1,
+        "full_name": "Sebastian Eschweiler",
+        "spouse":"Lina Eschweiler",
+        "children":[ "Ali Eschweiler","Sara Eschweiler"]
+      },
+      {
+        "id": 2,
+        "full_name": "Joe Galik",
+        "spouse": "",
+        "children":[]
+      },
+      {
+        "id": 3,
+        "full_name": "Zahra Shahab",
+        "spouse": "",
+        "children":[]
+      },
+      {
+        "id": 4,
+        "full_name": "Alex Gili",
+        "spouse": "Ana Gili",
+        "children":[]
+      },
+      {
+        "id": 5,
+        "full_name": "Shabnam Miri",
+        "spouse": "Bahman Miri",
+        "children":["Amir"]
+      }
+    ]
+  }
