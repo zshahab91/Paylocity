@@ -115,7 +115,7 @@ const EmployeesList = () => {
                 </tbody>
             </table>
         </div>
-            <ModalEmployee show={showModal} editUser={editUser} />
+            <ModalEmployee  editUser={editUser} />
             <ToastContainer
                 position="top-center"
                 hideProgressBar={false}
