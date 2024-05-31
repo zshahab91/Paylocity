@@ -20,7 +20,14 @@ export const calcTotalPaycheck = (user: IEmployee): number => {
     return totalDeduction;
 }
 
-export const  nextId = (list:IEmployee[]) => {
+export const nextId = (list:IEmployee[]) => {
     const maxId = list.reduce((maxId, item) => Math.max(item.id, maxId), -1)
     return maxId + 1
+}
+
+export const calcTotalUser = (item:IEmployee) => {
+    const payCheck = calcTotalPaycheck(item);
+    item.total_deduction = payCheck;
+    item.total_received = 52000 - payCheck;
+    return item;
 }

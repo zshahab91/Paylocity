@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useReducer, useState } from "react";
+import React, { useEffect , useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { IEmployee, IEmployeeState, IModal } from "@/interfaces/employee";
-import { addListEmployeesState, editListEmployeesState } from "@/store/employeeSlice";
+import { addListEmployeesState, editListEmployeesState, setShowModalEmployeeState } from "@/store/employeeSlice";
 
 const initialUser = {
     id: 0,
@@ -13,17 +13,12 @@ const initialUser = {
 }
 const ModalEmployee = (props: IModal) => {
     const dispatch = useAppDispatch();
-    const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+    const showModal = useAppSelector((state: {employee:IEmployeeState})=> state.employee.showModal);
 
-    const loading = useAppSelector((state: { employee: IEmployeeState }) => state.employee.loading);
-
-    const [showModal, setShowModal] = useState<boolean>(loading);
     const [currentUser, setCurrentUser] = useState<IEmployee>(initialUser);
     const [currentChildren, setCurrentChildren] = useState<string[]>([]);
     const [addChild, setAddChild] = useState<string>('');
-    useEffect(() => {
-        setShowModal(props.show);
-    }, [props.show]);
+
 
     useEffect(() => {
         if (props.editUser) {
@@ -31,11 +26,6 @@ const ModalEmployee = (props: IModal) => {
             setCurrentChildren(props.editUser.children);
         }
     }, [props.editUser]);
-    useCallback(() => {
-        setShowModal(false);
-        setCurrentUser(initialUser);
-        setCurrentChildren([]);
-    }, [showModal])
 
     const removeChild = (child: string) => {
         let newArray = currentChildren.filter(item => item !== child);
@@ -43,13 +33,11 @@ const ModalEmployee = (props: IModal) => {
         setCurrentUser({ ...currentUser, children: [...newArray] });
     }
     const resetState = () => {
-        forceUpdate();
-        setShowModal(false);
+        dispatch(setShowModalEmployeeState());
         setCurrentUser(initialUser);
         setCurrentChildren([]);
     }
     const saveEmployee = () => {
-        setShowModal(false);
         if (props.editUser) {
             dispatch(editListEmployeesState(currentUser));
 

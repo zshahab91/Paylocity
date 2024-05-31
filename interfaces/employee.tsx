@@ -15,4 +15,5 @@ export interface IModal {
 export interface IEmployeeState {
     employeesState: IEmployee[];
     loading:boolean;
+    showModal: boolean;
 }
