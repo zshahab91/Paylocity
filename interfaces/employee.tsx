@@ -8,7 +8,6 @@ export interface IEmployee {
 }
 
 export interface IModal {
-    show: boolean;
     editUser?: IEmployee;
 }
 
