@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { IEmployee, IEmployeeState } from "@/interfaces/employee";
 import { getAllEmployees } from "@/services/employee.service";
@@ -12,7 +12,7 @@ const EmployeesList = () => {
     const list = useAppSelector((state: { employee: IEmployeeState }) => state.employee.employeesState);
     const loading = useAppSelector((state: { employee: IEmployeeState }) => state.employee.loading);
     const showModal = useAppSelector((state: { employee: IEmployeeState }) => state.employee.showModal);
-    const [editUser, setEditUser] = useState<IEmployee>();
+    const [editUser, setEditUser] = useState<IEmployee | undefined>();
 
     const getData = async () => {
         const data = await getAllEmployees();
@@ -33,9 +33,12 @@ const EmployeesList = () => {
         getData();
     }, []);
 
-
-    const openModalEmployee = (user?: IEmployee) => {
-        if (user) setEditUser(user);
+    const openModalEmployee =  (user?: IEmployee) => {
+        if (user){
+            setEditUser(user)
+        }else{
+            setEditUser(undefined)
+        }
         dispatch(setShowModalEmployeeState());
     }
     return (
@@ -74,8 +77,8 @@ const EmployeesList = () => {
                             <tr className="bg-white border-b  hover:bg-gray-50 " key={inx}>
                                 <td className="w-4 p-4 border">
                                     <div className="flex items-center">
-                                        <input id="checkbox-table-search-1" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 " />
-                                        <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
+                                        <input id={`checkbox-table-${user.id}`} type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2 " />
+                                        <label htmlFor={`checkbox-table-${user.id}`} className="sr-only">checkbox</label>
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 border">
@@ -115,7 +118,7 @@ const EmployeesList = () => {
                 </tbody>
             </table>
         </div>
-            <ModalEmployee  editUser={editUser} />
+            <ModalEmployee editUser={editUser} />
             <ToastContainer
                 position="top-center"
                 hideProgressBar={false}

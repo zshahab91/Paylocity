@@ -1,4 +1,4 @@
-import React, { useEffect , useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { IEmployee, IEmployeeState, IModal } from "@/interfaces/employee";
 import { addListEmployeesState, editListEmployeesState, setShowModalEmployeeState } from "@/store/employeeSlice";
@@ -13,19 +13,21 @@ const initialUser = {
 }
 const ModalEmployee = (props: IModal) => {
     const dispatch = useAppDispatch();
-    const showModal = useAppSelector((state: {employee:IEmployeeState})=> state.employee.showModal);
+    const showModal = useAppSelector((state: { employee: IEmployeeState }) => state.employee.showModal);
 
     const [currentUser, setCurrentUser] = useState<IEmployee>(initialUser);
     const [currentChildren, setCurrentChildren] = useState<string[]>([]);
     const [addChild, setAddChild] = useState<string>('');
 
-
     useEffect(() => {
         if (props.editUser) {
             setCurrentUser(props.editUser);
             setCurrentChildren(props.editUser.children);
+        } else {
+            setCurrentUser(initialUser);
+            setCurrentChildren([]);
         }
-    }, [props.editUser]);
+    }, [props]);
 
     const removeChild = (child: string) => {
         let newArray = currentChildren.filter(item => item !== child);
@@ -33,9 +35,9 @@ const ModalEmployee = (props: IModal) => {
         setCurrentUser({ ...currentUser, children: [...newArray] });
     }
     const resetState = () => {
-        dispatch(setShowModalEmployeeState());
         setCurrentUser(initialUser);
         setCurrentChildren([]);
+        dispatch(setShowModalEmployeeState());
     }
     const saveEmployee = () => {
         if (props.editUser) {
@@ -82,7 +84,7 @@ const ModalEmployee = (props: IModal) => {
                                         value={currentUser?.spouse}
                                         onChange={(e) => setCurrentUser({ ...currentUser, spouse: e.target.value })}
                                         className={`bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`}
-                                        id="full_name" type="text" />
+                                        id="spouse" type="text" />
 
                                 </div>
                                 <div className="col-span-6 sm:col-span-3">
