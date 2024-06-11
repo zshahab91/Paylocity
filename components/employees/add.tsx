@@ -18,12 +18,12 @@ const ModalEmployee = (props: IModal) => {
     const [currentUser, setCurrentUser] = useState<IEmployee>(initialUser);
     const [currentChildren, setCurrentChildren] = useState<string[]>([]);
     const [addChild, setAddChild] = useState<string>('');
-
     useEffect(() => {
         if (props.editUser) {
             setCurrentUser(props.editUser);
             setCurrentChildren(props.editUser.children);
-        } else {
+        }
+        return () => {
             setCurrentUser(initialUser);
             setCurrentChildren([]);
         }
@@ -35,8 +35,6 @@ const ModalEmployee = (props: IModal) => {
         setCurrentUser({ ...currentUser, children: [...newArray] });
     }
     const resetState = () => {
-        setCurrentUser(initialUser);
-        setCurrentChildren([]);
         dispatch(setShowModalEmployeeState());
     }
     const saveEmployee = () => {
