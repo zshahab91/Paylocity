@@ -1,29 +1,22 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { authReducer } from "./authSlice";
-import { employeeReducer } from "./employeeSlice";
+import { productReducer } from "./productSlice";
 
 // configure which keuy we want to persist
-const authPersistConfig = {
-  key: "auth",
+const productPersistConfig = {
+  key: "product",
   storage: storage,
-  whitelist: ["authState"],
-};
-const employeePersistConfig = {
-  key: "employee",
-  storage: storage,
-  whitelist: ["employeesState"],
+  whitelist: ["productsState"],
 };
 
 const rootReducer = combineReducers({
-  auth: persistReducer(authPersistConfig, authReducer),
-  employee: persistReducer(employeePersistConfig, employeeReducer),
+  product: persistReducer(productPersistConfig, productReducer),
 
 });
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
+  middleware: (getDefaultMiddleware: (arg0: { serializableCheck: boolean; }) => any) =>
     getDefaultMiddleware({ serializableCheck: false }),
 });

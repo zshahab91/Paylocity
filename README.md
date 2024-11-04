@@ -1,8 +1,5 @@
-# Paylocity Test
+# Akkar Test
 ##  I'm Zahra Shahab ##
-### First you have to login :
-* username: admin
-* password: admin
 
 ## Development server
 

@@ -1,8 +1,8 @@
-import { IEmployee } from '@/interfaces/employee';
+import { IProduct } from "@/interfaces/product";
 
 const url = "http://localhost:5000";
 
-export const getAllEmployees = async (): Promise<IEmployee[]> =>{
-    const data = await fetch(`${url}/employees`);
+export const getAllProduct = async (): Promise<IProduct[]> =>{
+    const data = await fetch(`${url}/public`);
     return await data.json() ?? [];
 }
